@@ -58,13 +58,19 @@ The filament preset `Generic PETG @Creality Hi 0.4 nozzle - Calibrated` turns co
 
 The printer presets exist **only to carry a per-material Z offset** — everything else is identical to the stock `Creality K1 Max 0.4 nozzle`:
 
-| Preset | Z offset | Note |
-| --- | --- | --- |
-| `- PLA` | 0.05 mm | 300 × 300 bed |
-| `- PETG` | 0.175 mm | bed Y trimmed to 295 mm |
-| `- ASA` | 0.7 mm | 300 × 300 bed |
+| Preset | Z offset |
+| --- | --- |
+| `- PLA` | 0.05 mm |
+| `- PETG` | 0.175 mm |
+| `- ASA` | 0.7 mm |
 
-Pick the printer preset matching your filament, or first layers will be squashed or lifted.
+Pick the printer preset matching your filament, or first layers will be squashed
+or lifted.
+
+All three declare a 300 × 295 mm printable area rather than the nominal
+300 × 300. The strip beyond Y = 295 is already listed as excluded on the stock
+preset, so trimming the printable area keeps the slicer from placing parts
+where they cannot be printed.
 
 Process presets inherit `0.20mm Standard @Creality K1 Max 0.4 nozzle`, all at 3 walls with a 0.5 mm support XY distance and Z-overrides-XY spacing — except ASA:
 
