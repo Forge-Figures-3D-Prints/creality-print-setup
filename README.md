@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="Forge &amp; Figures" width="110">
+</p>
+
 # creality-print-setup
 
 Version-controlled backup of my custom [Creality Print](https://www.crealitycloud.com/software-firmware/creality-print) profiles — printer, filament, and process presets calibrated on my own machines.
