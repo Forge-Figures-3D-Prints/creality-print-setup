@@ -62,28 +62,67 @@ Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at 
 - **PLA** — hybrid tree supports. Note this one also carries `mixed_filament_definitions` (CFS multi-material config), so it doubles as the general default
 - **ASA** — organic supports, build-plate-only, 5 interface top layers, 0.25 mm support Z gap
 
-## Importing a profile
+## Keeping in sync with Creality Print
 
-In Creality Print, use the config import option in the File menu and pick the `.json` file. Where a printer preset exists (K1 Max), import it first — the process presets bind to it and won't show up otherwise.
+The repo is the source of truth. `tools/sync.py` moves presets between here and
+the installed app, finding the app folder itself so it works on any machine.
 
-Alternatively, copy the files straight into the user preset folder and restart Creality Print:
-
-```
-~/Library/Application Support/Creality/Creality Print/<version>/user/<account-id>/
-    machine/    <- Printer Profiles
-    filament/   <- Filament Profiles
-    process/    <- Process Profiles
+```bash
+tools/sync.py status     # compare, change nothing
+tools/sync.py export     # Creality Print -> repo, after calibrating
+tools/sync.py import     # repo -> Creality Print, on a new machine
 ```
 
-On Windows that folder is `%APPDATA%\Creality\Creality Print\<version>\user\<account-id>\`. Presets saved while signed out land under `user/default/` instead of an account id.
+Add `-n` to any of them to see what would happen without writing. Restart
+Creality Print after an `import`. If you have several accounts or app versions,
+pass `--account <id>` or `--app <path>`.
 
-A hand-copied preset has no accompanying `.info` sidecar, so Creality Print treats it as unsynced local-only until you next edit and save it. Importing through the app avoids this.
+After an `export`, review with `git diff` and commit. After an `import`, the
+restored presets have no `.info` sidecar, so Creality Print treats them as
+local-only until you next edit and save each one.
 
-## Exporting after a change
+### Doing it by hand
 
-Recalibrated something? Export the preset from Creality Print — or copy it out of the folder above — drop the `.json` into the matching folder here, and commit.
+Without the script: import a `.json` through the config import option in
+Creality Print's File menu, or copy files straight into the preset folder and
+restart. Where a printer preset exists (K1 Max), import it first — the process
+presets bind to it and won't appear otherwise.
 
-Two conventions worth keeping:
+```
+macOS    ~/Library/Application Support/Creality/Creality Print/<version>/user/<account-id>/
+Windows  %APPDATA%\Creality\Creality Print\<version>\user\<account-id>\
 
-- **Don't commit the `.info` sidecars.** They hold sync state and account ids, not settings.
-- **The default preset gets a `(PLA)` suffix on the filename.** Creality Print names the un-suffixed base preset just `- Calibrated`; it's filed here as `- Calibrated (PLA).json` so it sorts alongside its siblings. The internal `name` field is left untouched, so the app still sees the original name.
+    machine/  <- Printer Profiles      filament/ <- Filament Profiles
+    process/  <- Process Profiles
+```
+
+Presets saved while signed out land under `user/default/` instead of an account id.
+
+### What the script has to reconcile
+
+A preset's identity is its internal `name` field, never its filename. That lets
+this repo keep readable filenames — the `(PLA)` suffix below — while still
+restoring to exactly the name Creality Print expects.
+
+Presets exist in two shapes, and the repo contains both:
+
+- **minimal** — what Creality Print writes to disk: only the keys you changed,
+  on top of an `inherits` reference to a stock preset
+- **full** — what the app's own Export function writes: the entire resolved
+  configuration, roughly 140 keys
+
+A full export cannot be reconstructed offline. It contains defaults compiled
+into the application binary (`curr_bed_type`, `nozzle_height` and about 26
+others) that appear in no file on disk. So the script never converts between
+the shapes: it keeps whichever one a preset already uses, and compares presets
+by the settings they actually override rather than key by key. `status` reports
+"same settings, stored differently" when the two sides hold different shapes of
+an identical preset.
+
+Machine-bound keys are stripped on the way in — `printer_select_mac` is a
+specific printer's MAC address, and the `.info` sidecars hold account ids and
+sync state. None of that belongs in a portable repo.
+
+### Filename convention
+
+The default preset gets a `(PLA)` suffix here. Creality Print names the un-suffixed base preset just `- Calibrated`; it's filed here as `- Calibrated (PLA).json` so it sorts alongside its siblings. The internal `name` field is left untouched, so the app still sees the original name, and `import` restores it under that name.
