@@ -32,6 +32,11 @@ clearance of 0.5 mm XY with a rectilinear interface at 0.7 mm spacing. Supports
 are enabled in every profile, so turn them off per-model when they aren't
 wanted.
 
+Supports build from the plate only — none are generated resting on the model
+itself. That keeps upper surfaces unmarked, at the cost of leaving mid-air
+overhangs above the model body unsupported; turn it off per-model for parts
+that need internal support.
+
 What stays per-printer is the support Z gap — 0.23 mm on the Hi and K1 Max,
 0.25 mm on the K2 Plus — along with wall counts, infill density and any
 motion tuning.
@@ -42,7 +47,7 @@ Process presets inherit `0.20mm Standard @Creality Hi 0.4 nozzle`. All three use
 
 - **PLA** — 3 walls
 - **PETG** — 3 walls
-- **ASA** — 6 walls and 40 % infill for strength, build-plate-only
+- **ASA** — 6 walls and 40 % infill for strength
 
 All three share the 0.23 mm support Z gap, so supports release cleanly on any
 material.
@@ -63,7 +68,7 @@ Pick the printer preset matching your filament, or first layers will be squashed
 
 Process presets inherit `0.20mm Standard @Creality K1 Max 0.4 nozzle`, all at 3 walls with a 0.5 mm support XY distance and Z-overrides-XY spacing — except ASA:
 
-- **PLA** — build-plate-only, 5 bottom shell layers
+- **PLA** — 5 bottom shell layers
 - **PETG** — 10 mm outer brim, 0.23 mm support Z gap
 - **ASA** — the heavily tuned one. 4 walls with Arachne, precise outer wall, 25 % infill, monotonic top surface, full speed and acceleration ladder (120 mm/s outer wall, 400 mm/s travel), staged overhang slowdowns (40 / 25 / 20 mm/s), a 0.21 mm support Z gap, elephant foot and XY hole compensation
 
@@ -73,7 +78,7 @@ Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
 3 walls with a 0.25 mm support Z gap.
 
 - **PLA** — nothing beyond the shared baseline
-- **ASA** — build-plate-only, 5 interface top layers
+- **ASA** — 5 interface top layers
 
 These carry the shared baseline above, but its values were measured on the Hi
 rather than on a K2 Plus, so they are a starting point rather than proven.
