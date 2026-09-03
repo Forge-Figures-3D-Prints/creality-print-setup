@@ -81,6 +81,22 @@ After an `export`, review with `git diff` and commit. After an `import`, the
 restored presets have no `.info` sidecar, so Creality Print treats them as
 local-only until you next edit and save each one.
 
+### Choosing what gets backed up
+
+This repo curates the 0.20mm calibrated profiles. Other layer heights and
+one-off experiments stay in Creality Print on purpose. `.syncignore` lists them
+as globs matched against a preset's internal name:
+
+```
+0.24mm *        # every 0.24mm profile, including ones not made yet
+PLA+            # filament preset for an Ender-3 V3, a printer not covered here
+```
+
+`export` skips anything matching, and `status` lists them under "ignored" so you
+can still see what exists in the app but isn't backed up. A preset already
+committed here keeps being synced even if a pattern would match it — the ignore
+list decides what to *start* tracking, and never drops what you already keep.
+
 ### Doing it by hand
 
 Without the script: import a `.json` through the config import option in

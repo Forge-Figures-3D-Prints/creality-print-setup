@@ -22,6 +22,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import glob
 import json
 import os
@@ -39,6 +40,7 @@ KINDS = {
     "process": "Process Profiles",
 }
 UNSORTED = "_Unsorted"
+IGNORE_FILE = ".syncignore"
 
 # Bound to one physical machine or one login - never commit these.
 VOLATILE = {"printer_select_mac", "setting_id", "user_id", "sync_info"}
@@ -54,6 +56,19 @@ META = {"version", "base_id", "from", "is_custom_defined",
 # "0.20mm Standard ..." gets swallowed into the printer name.
 AFTER_AT_RE = re.compile(r"@\s*(.+?)\s+\d+(?:\.\d+)?\s*nozzle")
 AT_START_RE = re.compile(r"^\s*(.+?)\s+\d+(?:\.\d+)?\s*nozzle")
+
+
+def ignore_patterns() -> list[str]:
+    """Globs from .syncignore, matched against preset names."""
+    path = os.path.join(REPO, IGNORE_FILE)
+    if not os.path.exists(path):
+        return []
+    with open(path, encoding="utf-8") as fh:
+        return [ln.strip() for ln in fh if ln.strip() and not ln.startswith("#")]
+
+
+def ignored(name: str, patterns: list[str]) -> bool:
+    return any(fnmatch.fnmatch(name, pat) for pat in patterns)
 
 
 # ---------------------------------------------------------------- discovery
@@ -263,7 +278,9 @@ def rel(path: str) -> str:
 def cmd_status(root: str, _args) -> int:
     app, repo = scan_app(root), scan_repo()
     index = build_index(root)
-    only_app = sorted(set(app) - set(repo))
+    patterns = ignore_patterns()
+    skipped = sorted(k for k in set(app) - set(repo) if ignored(k[1], patterns))
+    only_app = sorted(k for k in set(app) - set(repo) if not ignored(k[1], patterns))
     only_repo = sorted(set(repo) - set(app))
 
     differing, reformat = [], []
@@ -298,15 +315,23 @@ def cmd_status(root: str, _args) -> int:
             print(f"  - [{kind}] {name}")
     if not (only_app or only_repo or differing or reformat):
         print(f"In sync - {len(repo)} presets match.")
+    if skipped:
+        print(f"\nIgnored via {IGNORE_FILE} ({len(skipped)}) - present in Creality Print, not backed up:")
+        for kind, name in skipped:
+            print(f"  . [{kind}] {name}")
     return 0
 
 
 def cmd_export(root: str, args) -> int:
     app, repo = scan_app(root), scan_repo()
     index = build_index(root)
-    added = updated = 0
+    patterns = ignore_patterns()
+    added = updated = skipped = 0
     for key in sorted(app):
-        kind, _ = key
+        kind, name = key
+        if key not in repo and ignored(name, patterns):
+            skipped += 1
+            continue
         data = app[key]["data"]
         # keep whatever shape the repo already uses for this preset
         dest = repo_path_for(kind, data, repo)
@@ -328,7 +353,8 @@ def cmd_export(root: str, args) -> int:
             print(f"      {rel(repo[key]['path'])}")
 
     print(f"\n{'Would add' if args.dry_run else 'Added'} {added}, "
-          f"{'update' if args.dry_run else 'updated'} {updated}.")
+          f"{'update' if args.dry_run else 'updated'} {updated}"
+          f"{f', skipped {skipped} via {IGNORE_FILE}' if skipped else ''}.")
     if not args.dry_run and (added or updated):
         print("Review with `git diff`, then commit.")
     return 0
