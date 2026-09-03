@@ -25,15 +25,27 @@ Every preset is JSON exported from Creality Print 7.x. They're diffs, not full c
 
 ## What's calibrated
 
-Common ground across all three printers: gyroid sparse infill, tree (auto) supports at a 45° threshold, and small overhangs kept rather than pruned.
+Common ground across all three printers: gyroid sparse infill, tree (auto)
+supports at a 45° threshold with small overhangs kept rather than pruned, an
+outer-only brim at a 0.13 mm object gap, a back seam, and a shared support
+clearance of 0.5 mm XY with a rectilinear interface at 0.7 mm spacing. Supports
+are enabled in every profile, so turn them off per-model when they aren't
+wanted.
+
+What stays per-printer is the support Z gap — 0.23 mm on the Hi and K1 Max,
+0.25 mm on the K2 Plus — along with wall counts, infill density and any
+motion tuning.
 
 ### Creality Hi
 
 Process presets inherit `0.20mm Standard @Creality Hi 0.4 nozzle`. All three use an outer-only brim and a 100 % raft first layer, and leave line widths at the stock 0.42 mm.
 
 - **PLA** — 3 walls, hybrid tree supports
-- **PETG** — 3 walls, hybrid tree supports, back seam, and loosened support gaps (0.23 mm Z, 0.5 mm XY, 0.7 mm interface spacing) so supports release cleanly
+- **PETG** — 3 walls, hybrid tree supports
 - **ASA** — 6 walls and 40 % infill for strength, organic supports, build-plate-only
+
+All three share the 0.23 mm support Z gap, so supports release cleanly on any
+material.
 
 The filament preset `Generic PETG @Creality Hi 0.4 nozzle - Calibrated` turns cooling right down: 20–30 % fan, off entirely for the first 5 layers, no fan stop/start smoothing. That's what keeps layer adhesion and stops warping on PETG.
 
@@ -57,10 +69,14 @@ Process presets inherit `0.20mm Standard @Creality K1 Max 0.4 nozzle`, all at 3 
 
 ### Creality K2 Plus
 
-Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at 3 walls.
+Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
+3 walls with a 0.25 mm support Z gap.
 
 - **PLA** — hybrid tree supports
-- **ASA** — organic supports, build-plate-only, 5 interface top layers, 0.25 mm support Z gap
+- **ASA** — organic supports, build-plate-only, 5 interface top layers
+
+These carry the shared baseline above, but its values were measured on the Hi
+rather than on a K2 Plus, so they are a starting point rather than proven.
 
 ## Keeping in sync with Creality Print
 
