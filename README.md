@@ -201,3 +201,9 @@ in Creality Print as well as here. Creality Print's own default is an unsuffixed
 mystery profile in the dropdown; the explicit suffix avoids picking the wrong
 one. Rename in the app and re-export, rather than editing the `name` field here,
 so both sides keep matching.
+
+## License
+
+MIT — see [LICENSE](LICENSE). Take the profiles, the sync script, or both, and
+do what you like with them. They're offered as-is: a preset that suits our
+machines and our filament may still want a test print on yours.
