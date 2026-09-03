@@ -29,7 +29,7 @@ Common ground across all three printers: gyroid sparse infill, tree (auto) suppo
 
 ### Creality Hi
 
-Process presets inherit `0.20mm Standard @Creality Hi 0.4 nozzle`. All three use a 0.38 mm top surface line width, outer-only brim, and a 100 % raft first layer.
+Process presets inherit `0.20mm Standard @Creality Hi 0.4 nozzle`. All three use an outer-only brim and a 100 % raft first layer, and leave line widths at the stock 0.42 mm.
 
 - **PLA** — 3 walls, hybrid tree supports
 - **PETG** — 3 walls, hybrid tree supports, back seam, and loosened support gaps (0.23 mm Z, 0.5 mm XY, 0.7 mm interface spacing) so supports release cleanly
