@@ -21,7 +21,6 @@
     "support_threshold_angle": "45",
     "support_top_z_distance": "0.23",
     "support_type": "tree(auto)",
-    "top_surface_line_width": "0.38",
     "version": "26.4.28.18",
     "wall_loops": "3"
 }
