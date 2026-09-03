@@ -14,6 +14,7 @@
     "support_interface_pattern": "rectilinear",
     "support_interface_spacing": "0.7",
     "support_object_xy_distance": "0.5",
+    "support_on_build_plate_only": "1",
     "support_remove_small_overhang": "0",
     "support_style": "organic",
     "support_threshold_angle": "45",
