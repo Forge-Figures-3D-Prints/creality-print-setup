@@ -25,9 +25,9 @@ Every preset is JSON exported from Creality Print 7.x. They're diffs, not full c
 
 ## What's calibrated
 
-Common ground across all three printers: gyroid sparse infill, tree (auto)
-supports at a 45° threshold with small overhangs kept rather than pruned, an
-outer-only brim at a 0.13 mm object gap, a back seam, and a shared support
+Common ground across all three printers: gyroid sparse infill, organic tree
+(auto) supports at a 45° threshold with small overhangs kept rather than pruned,
+an outer-only brim at a 0.13 mm object gap, a back seam, and a shared support
 clearance of 0.5 mm XY with a rectilinear interface at 0.7 mm spacing. Supports
 are enabled in every profile, so turn them off per-model when they aren't
 wanted.
@@ -40,9 +40,9 @@ motion tuning.
 
 Process presets inherit `0.20mm Standard @Creality Hi 0.4 nozzle`. All three use an outer-only brim and a 100 % raft first layer, and leave line widths at the stock 0.42 mm.
 
-- **PLA** — 3 walls, hybrid tree supports
-- **PETG** — 3 walls, hybrid tree supports
-- **ASA** — 6 walls and 40 % infill for strength, organic supports, build-plate-only
+- **PLA** — 3 walls
+- **PETG** — 3 walls
+- **ASA** — 6 walls and 40 % infill for strength, build-plate-only
 
 All three share the 0.23 mm support Z gap, so supports release cleanly on any
 material.
@@ -63,17 +63,17 @@ Pick the printer preset matching your filament, or first layers will be squashed
 
 Process presets inherit `0.20mm Standard @Creality K1 Max 0.4 nozzle`, all at 3 walls with a 0.5 mm support XY distance and Z-overrides-XY spacing — except ASA:
 
-- **PLA** — organic supports, build-plate-only, 5 bottom shell layers
-- **PETG** — hybrid tree supports, 10 mm outer brim, 0.23 mm support Z gap
-- **ASA** — the heavily tuned one. 4 walls with Arachne, precise outer wall, 25 % infill, monotonic top surface, full speed and acceleration ladder (120 mm/s outer wall, 400 mm/s travel), staged overhang slowdowns (40 / 25 / 20 mm/s), organic supports at a 0.21 mm Z gap, elephant foot and XY hole compensation
+- **PLA** — build-plate-only, 5 bottom shell layers
+- **PETG** — 10 mm outer brim, 0.23 mm support Z gap
+- **ASA** — the heavily tuned one. 4 walls with Arachne, precise outer wall, 25 % infill, monotonic top surface, full speed and acceleration ladder (120 mm/s outer wall, 400 mm/s travel), staged overhang slowdowns (40 / 25 / 20 mm/s), a 0.21 mm support Z gap, elephant foot and XY hole compensation
 
 ### Creality K2 Plus
 
 Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
 3 walls with a 0.25 mm support Z gap.
 
-- **PLA** — hybrid tree supports
-- **ASA** — organic supports, build-plate-only, 5 interface top layers
+- **PLA** — nothing beyond the shared baseline
+- **ASA** — build-plate-only, 5 interface top layers
 
 These carry the shared baseline above, but its values were measured on the Hi
 rather than on a K2 Plus, so they are a starting point rather than proven.
