@@ -87,6 +87,10 @@ def app_roots() -> list[str]:
     return sorted(roots, key=lambda p: (os.path.basename(p) == "default", p), reverse=False)
 
 
+def has_presets(root: str) -> bool:
+    return any(glob.glob(os.path.join(root, kind, "*.json")) for kind in KINDS)
+
+
 def pick_root(args) -> str:
     if args.app:
         return os.path.abspath(os.path.expanduser(args.app))
@@ -99,12 +103,16 @@ def pick_root(args) -> str:
                 return r
         sys.exit(f"No account {args.account!r}. Found: {', '.join(os.path.basename(r) for r in roots)}")
     real = [r for r in roots if os.path.basename(r) != "default"]
-    if len(real) > 1:
+    # Creality Print leaves behind account folders holding only sync bookkeeping.
+    # They are not a real choice, so don't make the user disambiguate against them.
+    populated = [r for r in real if has_presets(r)]
+    candidates = populated or real
+    if len(candidates) > 1:
         sys.exit(
             "Several accounts found; pick one with --account:\n  "
-            + "\n  ".join(os.path.basename(r) for r in real)
+            + "\n  ".join(os.path.basename(r) for r in candidates)
         )
-    return real[0] if real else roots[0]
+    return candidates[0] if candidates else roots[0]
 
 
 # ---------------------------------------------------------------- resolving

@@ -12,6 +12,7 @@ restore" in the README for that half.
 from __future__ import annotations
 
 import argparse
+import glob
 import importlib.util
 import json
 import os
@@ -61,10 +62,15 @@ class SyncTest(unittest.TestCase):
              "thumbnails": "96x96,300x300"},
         )
         self._real_repo = sync.REPO
+        self._real_app_roots = sync.app_roots
         sync.REPO = self.repo
+        user_dir = os.path.dirname(self.app)
+        sync.app_roots = lambda: sorted(
+            p for p in glob.glob(os.path.join(user_dir, "*")) if os.path.isdir(p))
 
     def tearDown(self):
         sync.REPO = self._real_repo
+        sync.app_roots = self._real_app_roots
         shutil.rmtree(self.tmp, ignore_errors=True)
 
     def args(self, **kw):
@@ -187,6 +193,25 @@ class SyncTest(unittest.TestCase):
         self.assertEqual(read_json((os.path.join(
             self.repo, "Creality Hi", sync.KINDS["process"], "tracked.json")))["wall_loops"], "8",
             "an already-tracked preset stopped syncing because a pattern matched it")
+
+    def test_empty_account_folders_are_skipped(self):
+        """Creality Print leaves behind account folders with no presets in them."""
+        user_dir = os.path.dirname(self.app)
+        for stray in ("Temp", "default"):
+            os.makedirs(os.path.join(user_dir, stray, "process"), exist_ok=True)
+        write_json(os.path.join(user_dir, "Temp", "sync_data.json"), {"current_machine": "x"})
+        self.app_preset("process", "0.20mm Standard @Creality Hi 0.4 nozzle - Calibrated")
+        chosen = sync.pick_root(argparse.Namespace(app=None, account=None))
+        self.assertEqual(os.path.basename(chosen), "acct",
+                         "an account folder holding no presets was treated as a real choice")
+
+    def test_account_flag_still_wins(self):
+        user_dir = os.path.dirname(self.app)
+        os.makedirs(os.path.join(user_dir, "Other", "process"), exist_ok=True)
+        write_json(os.path.join(user_dir, "Other", "process", "p.json"),
+                   {"name": "p", "inherits": ""})
+        chosen = sync.pick_root(argparse.Namespace(app=None, account="Other"))
+        self.assertEqual(os.path.basename(chosen), "Other")
 
     def test_printer_routing(self):
         cases = [

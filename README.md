@@ -59,7 +59,7 @@ Process presets inherit `0.20mm Standard @Creality K1 Max 0.4 nozzle`, all at 3 
 
 Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at 3 walls.
 
-- **PLA** — hybrid tree supports. Note this one also carries `mixed_filament_definitions` (CFS multi-material config), so it doubles as the general default
+- **PLA** — hybrid tree supports
 - **ASA** — organic supports, build-plate-only, 5 interface top layers, 0.25 mm support Z gap
 
 ## Keeping in sync with Creality Print
@@ -75,7 +75,9 @@ tools/sync.py import     # repo -> Creality Print, on a new machine
 
 Add `-n` to any of them to see what would happen without writing. Restart
 Creality Print after an `import`. If you have several accounts or app versions,
-pass `--account <id>` or `--app <path>`.
+pass `--account <id>` or `--app <path>`. Account folders containing no presets
+— Creality Print leaves them behind holding only sync bookkeeping — are skipped
+rather than offered as a choice.
 
 After an `export`, review with `git diff` and commit. After an `import`, the
 restored presets have no `.info` sidecar, so Creality Print treats them as
@@ -113,8 +115,9 @@ Print major upgrade, since the preset format is versioned.
 ### Choosing what gets backed up
 
 This repo curates the 0.20mm calibrated profiles. Other layer heights and
-one-off experiments stay in Creality Print on purpose. `.syncignore` lists them
-as globs matched against a preset's internal name:
+one-off experiments stay in Creality Print on purpose, and most have since been
+deleted there. `.syncignore` keeps them from being picked up again, as globs
+matched against a preset's internal name:
 
 ```
 0.24mm *        # every 0.24mm profile, including ones not made yet
@@ -145,9 +148,10 @@ Presets saved while signed out land under `user/default/` instead of an account 
 
 ### What the script has to reconcile
 
-A preset's identity is its internal `name` field, never its filename. That lets
-this repo keep readable filenames — the `(PLA)` suffix below — while still
-restoring to exactly the name Creality Print expects.
+A preset's identity is its internal `name` field, never its filename. Filenames
+here happen to match, but nothing relies on it: rename a `.json` and it still
+restores to the right preset, while editing the `name` inside makes it a
+different preset.
 
 Presets exist in two shapes, and the repo contains both:
 
@@ -168,6 +172,11 @@ Machine-bound keys are stripped on the way in — `printer_select_mac` is a
 specific printer's MAC address, and the `.info` sidecars hold account ids and
 sync state. None of that belongs in a portable repo.
 
-### Filename convention
+### Naming
 
-The default preset gets a `(PLA)` suffix here. Creality Print names the un-suffixed base preset just `- Calibrated`; it's filed here as `- Calibrated (PLA).json` so it sorts alongside its siblings. The internal `name` field is left untouched, so the app still sees the original name, and `import` restores it under that name.
+Each printer's three process presets are suffixed `(PLA)`, `(PETG)` and `(ASA)`,
+in Creality Print as well as here. Creality Print's own default is an unsuffixed
+`- Calibrated`, which leaves the material implicit and reads as a fourth,
+mystery profile in the dropdown; the explicit suffix avoids picking the wrong
+one. Rename in the app and re-export, rather than editing the `name` field here,
+so both sides keep matching.
