@@ -81,6 +81,35 @@ After an `export`, review with `git diff` and commit. After an `import`, the
 restored presets have no `.info` sidecar, so Creality Print treats them as
 local-only until you next edit and save each one.
 
+### Testing the sync
+
+```bash
+python3 tools/test_sync.py
+```
+
+11 tests covering both directions, run against a synthetic Creality Print
+install in a temp directory. Nothing reads or writes your real preset folder,
+so it is safe to run any time. They cover the things that would quietly lose a
+profile: filename-vs-internal-name identity, round-trip fidelity, export not
+duplicating a renamed file, machine-bound keys never reaching the repo, `.bak`
+backups before an overwrite, `--dry-run` writing nothing, `.syncignore`
+behaviour, printer routing, and full-vs-minimal shapes comparing equal.
+
+**What this cannot prove** is that Creality Print itself accepts a restored
+preset — the tests exercise the script, not the slicer. Restored presets have no
+`.info` sidecar, and only the real app can confirm it takes them anyway. To
+check that end to end, with a preset already committed here so nothing is at
+risk:
+
+1. Quit Creality Print.
+2. Move one preset's `.json` and `.info` out of the app's `process/` folder.
+3. Run `tools/sync.py import`.
+4. Start Creality Print and confirm the preset appears in the process dropdown
+   with its settings intact.
+
+If it does, a restore onto a new machine works. Do this once after a Creality
+Print major upgrade, since the preset format is versioned.
+
 ### Choosing what gets backed up
 
 This repo curates the 0.20mm calibrated profiles. Other layer heights and
