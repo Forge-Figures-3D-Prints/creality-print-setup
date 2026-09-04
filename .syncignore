@@ -2,11 +2,10 @@
 # One glob per line, matched against a preset's internal name.
 # `tools/sync.py` skips these on export and lists them under "ignored" in status.
 
-# This repo curates the 0.20mm calibrated profiles only. Other layer heights
-# and one-off experiments stay in Creality Print and are not backed up here.
+# This repo curates the 0.20mm and 0.16mm calibrated profiles. Other layer
+# heights and one-off experiments stay in Creality Print, not backed up here.
 0.08mm *
 0.12mm *
-0.16mm *
 0.24mm *
 0.28mm *
 0.32mm *
