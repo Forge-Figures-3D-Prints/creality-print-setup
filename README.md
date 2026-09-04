@@ -23,11 +23,20 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | Creality K1 Max | PLA · PETG · ASA | — | PLA · PETG · ASA |
 | Creality K2 Plus | — | — | PLA · ASA |
 
+Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
+layer height — 16 process profiles in total.
+
 A folder only appears where a preset was actually saved and calibrated; a dash means there's nothing worth keeping, not that it's missing. The Hi runs fine on the stock machine preset, so it doesn't have one here.
 
 Every preset is JSON exported from Creality Print 7.x. They're diffs, not full configs: each carries an `inherits` field naming the stock Creality preset it's based on and stores only the keys that were changed. That keeps them small and readable, but it also means **the matching stock preset must exist in your Creality Print install** for these to load.
 
 ## What's calibrated
+
+Each printer has its profiles at two layer heights, **0.20mm** and **0.16mm**,
+carrying identical overrides. The 0.16mm variants inherit Creality's own 0.16mm
+stock presets, so its layer-height adjustments — more bottom and top shell
+layers, faster bridging and infill — still apply underneath. Only the settings
+listed below are overridden.
 
 Common ground across all three printers: gyroid sparse infill, organic tree
 (auto) supports at a 45° threshold with small overhangs kept rather than pruned,
