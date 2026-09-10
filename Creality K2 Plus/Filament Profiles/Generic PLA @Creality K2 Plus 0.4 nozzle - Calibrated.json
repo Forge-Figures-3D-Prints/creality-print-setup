@@ -1,0 +1,26 @@
+{
+    "base_id": "GFSA04",
+    "close_fan_the_first_x_layers": [
+        "5"
+    ],
+    "epoxy_resin_plate_temp_initial_layer": [
+        "45"
+    ],
+    "fan_min_speed": [
+        "40"
+    ],
+    "filament_settings_id": [
+        "Generic PLA @Creality K2 Plus 0.4 nozzle - Calibrated"
+    ],
+    "from": "User",
+    "full_fan_speed_layer": [
+        "10"
+    ],
+    "inherits": "Generic PLA @Creality K2 Plus 0.4 nozzle",
+    "is_custom_defined": "0",
+    "name": "Generic PLA @Creality K2 Plus 0.4 nozzle - Calibrated",
+    "overhang_fan_speed": [
+        "75"
+    ],
+    "version": "26.8.29.18"
+}

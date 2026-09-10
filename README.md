@@ -21,7 +21,7 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | --- | --- | --- | --- |
 | Creality Hi | — | PETG | PLA · PETG · ASA |
 | Creality K1 Max | PLA · PETG · ASA | — | PLA · PETG · ASA |
-| Creality K2 Plus | — | — | PLA · ASA |
+| Creality K2 Plus | — | PLA | PLA · ASA |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
 layer height — 16 process profiles in total.
@@ -101,6 +101,16 @@ Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
 
 These carry the shared baseline above, but its values were measured on the Hi
 rather than on a K2 Plus, so they are a starting point rather than proven.
+
+The filament preset `Generic PLA @Creality K2 Plus 0.4 nozzle - Calibrated`
+carries the same cooling regime as the Hi's PLA preset — 40 % minimum fan
+ramping to full by layer 10, fan off for the first 5 layers, overhangs at 75 %
+rather than 100 %. Those are absolute fan values, so they transfer between
+machines unchanged. The epoxy-resin-plate first layer is 45 °C, following the
+Hi's +5 °C over stock rather than its literal 65 °C, since the K2 Plus starts
+from a 40 °C stock value for that plate. The K2 Plus's extra cooling hardware —
+auxiliary fan, chamber temperature control, the special-area CDS fan — is left
+at stock.
 
 ## Keeping in sync with Creality Print
 
