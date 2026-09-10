@@ -19,12 +19,13 @@ Creality Print keeps user presets in an application-support folder that gets wip
 
 | Printer | Printer | Filament | Process |
 | --- | --- | --- | --- |
-| Creality Hi | — | PETG | PLA · PETG · ASA |
+| Creality Hi | — | PLA · PETG | PLA · PETG · ASA |
 | Creality K1 Max | PLA · PETG · ASA | — | PLA · PETG · ASA |
-| Creality K2 Plus | — | PLA | PLA · ASA |
+| Creality K2 Plus | — | PLA | PLA · ASA · PLA (miniatures) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
-layer height — 16 process profiles in total.
+layer height — 17 process profiles in total. The K2 Plus miniatures preset is
+the one exception: it exists at 0.20mm only.
 
 A folder only appears where a preset was actually saved and calibrated; a dash means there's nothing worth keeping, not that it's missing. The Hi runs fine on the stock machine preset, so it doesn't have one here.
 
@@ -67,6 +68,11 @@ material.
 
 The filament preset `Generic PETG @Creality Hi 0.4 nozzle - Calibrated` turns cooling right down: 20–30 % fan, off entirely for the first 5 layers, no fan stop/start smoothing. That's what keeps layer adhesion and stops warping on PETG.
 
+`Generic PLA @Creality Hi 0.4 nozzle - Calibrated` eases cooling off rather than
+killing it: 40 % minimum fan reaching full by layer 10, off for the first 5
+layers, overhangs at 75 % instead of 100 %, and the epoxy-resin-plate first
+layer at 65 °C. This is the preset the K2 Plus PLA one was derived from.
+
 ### Creality K1 Max
 
 The printer presets exist **only to carry a per-material Z offset** — everything else is identical to the stock `Creality K1 Max 0.4 nozzle`:
@@ -98,6 +104,11 @@ Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
 
 - **PLA** — nothing beyond the shared baseline
 - **ASA** — 5 interface top layers
+- **PLA (miniatures)** — 0.20mm only, and deliberately off the shared baseline:
+  5 % adaptive cubic infill, hybrid tree supports dropped to a 25° threshold and
+  restricted to critical regions only. No brim, no seam or support-interface
+  overrides — the point is supports that touch as little of the model as
+  possible and come away clean.
 
 These carry the shared baseline above, but its values were measured on the Hi
 rather than on a K2 Plus, so they are a starting point rather than proven.
