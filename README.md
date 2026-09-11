@@ -19,13 +19,18 @@ Creality Print keeps user presets in an application-support folder that gets wip
 
 | Printer | Printer | Filament | Process |
 | --- | --- | --- | --- |
-| Creality Hi | — | PLA · PETG | PLA · PETG · ASA |
-| Creality K1 Max | PLA · PETG · ASA | — | PLA · PETG · ASA |
-| Creality K2 Plus | — | PLA · ASA | PLA · ASA · PLA (miniatures) |
+| Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA |
+| Creality K1 Max | PLA · PETG · ASA | ABS | PLA · PETG · ASA |
+| Creality K2 Plus | — | PLA · ASA · ABS | PLA · ASA · PLA (miniatures) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
 layer height — 17 process profiles in total. The K2 Plus miniatures preset is
 the one exception: it exists at 0.20mm only.
+
+The three ABS filament presets were written here, not saved from Creality
+Print after calibration. They adapt the K2 Plus ASA cooling to each machine but
+haven't been print-tested yet. There are no ABS process or printer presets. Use
+the ASA process preset for ABS parts.
 
 A folder only appears where a preset was actually saved and calibrated; a dash means there's nothing worth keeping, not that it's missing. The Hi runs fine on the stock machine preset, so it doesn't have one here.
 
@@ -85,6 +90,14 @@ killing it: 40 % minimum fan reaching full by layer 10, off for the first 5
 layers, overhangs at 75 % instead of 100 %, and the epoxy-resin-plate first
 layer at 65 °C. This is the preset the K2 Plus PLA one was derived from.
 
+`Generic ABS @Creality Hi 0.4 nozzle - Calibrated` takes the K2 Plus ASA
+cooling: 0–25 % fan instead of stock 40–70 %, off for the first 5 layers and
+reaching its ceiling by layer 5, and overhangs at 35 % rather than 80 %. Stock
+Hi ABS already has fan stop/start smoothing off. The epoxy-resin-plate first
+layer is 95 °C, the Hi's usual 5 °C over stock. The Hi has no air filtration,
+so the ASA preset's exhaust and filtration settings are left out. The Hi is also
+the only open-frame printer of the three, so it is the most prone to ABS warping.
+
 ### Creality K1 Max
 
 The printer presets exist **only to carry a per-material Z offset** — everything else is identical to the stock `Creality K1 Max 0.4 nozzle`:
@@ -108,6 +121,15 @@ Process presets inherit `0.20mm Standard @Creality K1 Max 0.4 nozzle`, all at 3 
 - **PLA** — 5 bottom shell layers
 - **PETG** — 10 mm outer brim, 0.23 mm support Z gap
 - **ASA** — the heavily tuned one. 4 walls, 25 % infill, monotonic top surface, a 0.21 mm support Z gap, slowdown for curled perimeters, elephant foot and XY hole compensation. Speed, acceleration and jerk are stock like every other profile; its former hand-tuned ladder (120 mm/s outer wall at 2500, a 30 mm/s first layer at 500, 40 / 25 / 20 mm/s overhangs, 400 mm/s travel) is recoverable from commit `fd470b1` if ASA first layers or overhangs suffer without it
+
+`Generic ABS @Creality K1 Max 0.4 nozzle - Calibrated` is the K1 Max's only
+filament preset. It carries the K2 Plus ASA regime unchanged: 0–25 % part
+cooling instead of stock 10–60 %, off for the first 5 layers and at its ceiling
+by layer 5, no fan stop/start smoothing, and overhangs at 35 % rather than 80 %.
+Air filtration is on, with the exhaust fan at 20 % while printing and 100 % once
+finished. Plate temperature stays at the stock 100 °C, the K1 Max bed's
+maximum, so it has no first-layer bump. There's no ABS printer preset, so ABS
+has no Z offset of its own yet.
 
 ### Creality K2 Plus
 
@@ -152,6 +174,14 @@ preset it does touch the enclosure: air filtration is on, and the exhaust fan
 runs at 20 % during the print instead of 60 %, to keep the chamber warm, then
 100 % instead of 80 % once it finishes to clear the fumes. Chamber temperature
 itself stays at the stock 50 °C.
+
+`Generic ABS @Creality K2 Plus 0.4 nozzle - Calibrated` is that ASA preset
+applied to ABS. It has the same 0–25 % fan (stock 10–60 %), fan-off first 5
+layers, no stop/start smoothing, 35 % overhangs, air filtration, and 20 % / 100 %
+exhaust. The textured-plate first layer is 105 °C, again 5 °C over stock, which
+the K2 Plus bed can reach. The fan-cooling layer time isn't overridden because
+stock ABS already uses the 30 s the ASA preset sets. Chamber temperature stays
+at the stock 50 °C.
 
 ## Keeping in sync with Creality Print
 
