@@ -57,19 +57,12 @@ small raised text:
 - **Walls** — Arachne walls and a precise outer wall keep thin raised lines as
   walls instead of gap fill, and the outer wall line width drops from 0.42 to
   0.38 mm so the nozzle traces tighter curves and sharper corners
-- **Speeds** — outer walls at no more than 50 mm/s, inner walls 100, top
-  surfaces 80 and gap fill 50
-- **Accelerations** — capped at 2000 on outer walls and top surfaces, 3000 on
-  inner walls and 8000 for travel, with a 50 % accel-to-decel factor
 - **Travel** — avoid crossing walls, so the nozzle routes around finished
   detail instead of dragging across it and stringing between raised features
 
-The speeds, accelerations and line width are ceilings, not fixed values: where
-a stock preset or an earlier calibration was already lower, it was left alone.
-Most stock speeds were never reached anyway — the ASA filament preset's
-10 mm³/s flow limit caps a 0.20 mm layer near 120 mm/s — so only values below
-that actually slow a print. Everything prints noticeably slower as a result;
-use the 0.16mm variants for the finest relief work.
+Speed, acceleration and jerk are left at Creality's stock values in every
+profile, the K1 Max ASA included. Use the 0.16mm variants for the finest relief
+work.
 
 What stays per-printer is the support Z gap — 0.23 mm on the Hi and K1 Max,
 0.25 mm on the K2 Plus — along with wall counts and infill density.
@@ -114,7 +107,7 @@ Process presets inherit `0.20mm Standard @Creality K1 Max 0.4 nozzle`, all at 3 
 
 - **PLA** — 5 bottom shell layers
 - **PETG** — 10 mm outer brim, 0.23 mm support Z gap
-- **ASA** — the heavily tuned one. 4 walls, 25 % infill, monotonic top surface, its own speed and acceleration ladder (160 mm/s sparse infill, 400 mm/s travel, 5000 default acceleration) under the shared fine-detail ceilings, staged overhang slowdowns (40 / 25 / 20 mm/s), a 0.21 mm support Z gap, elephant foot and XY hole compensation
+- **ASA** — the heavily tuned one. 4 walls, 25 % infill, monotonic top surface, a 0.21 mm support Z gap, slowdown for curled perimeters, elephant foot and XY hole compensation. Speed, acceleration and jerk are stock like every other profile; its former hand-tuned ladder (120 mm/s outer wall at 2500, a 30 mm/s first layer at 500, 40 / 25 / 20 mm/s overhangs, 400 mm/s travel) is recoverable from commit `fd470b1` if ASA first layers or overhangs suffer without it
 
 ### Creality K2 Plus
 
@@ -130,7 +123,7 @@ Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
   threshold and restricted to critical regions only. No brim, no seam or
   support-interface overrides — the point is supports that touch as little of
   the model as possible and come away clean. It does carry the fine-detail
-  speeds, accelerations and walls.
+  walls, line width and travel settings.
 
 These carry the shared baseline above, but its values were measured on the Hi
 rather than on a K2 Plus, so they are a starting point rather than proven.
