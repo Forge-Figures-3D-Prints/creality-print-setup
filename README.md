@@ -39,10 +39,8 @@ stock presets, so its layer-height adjustments — more bottom and top shell
 layers, faster bridging and infill — still apply underneath. Only the settings
 listed below are overridden.
 
-Common ground across all three printers: a 0.28 mm first layer (stock is 0.2)
-for better grip and more tolerance of an uneven plate, gyroid sparse infill,
-organic tree (auto) supports at a 45° threshold with small overhangs kept rather
-than pruned,
+Common ground across all three printers: gyroid sparse infill, organic tree
+(auto) supports at a 45° threshold with small overhangs kept rather than pruned,
 an outer-only brim at a 0.13 mm object gap, a back seam, and a shared support
 clearance of 0.5 mm XY with a rectilinear interface at 0.7 mm spacing. Supports
 are enabled in every profile, so turn them off per-model when they aren't
@@ -115,6 +113,10 @@ Process presets inherit `0.20mm Standard @Creality K1 Max 0.4 nozzle`, all at 3 
 
 Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
 3 walls with a 0.25 mm support Z gap.
+
+Every K2 Plus process preset, miniatures included, prints a 0.28 mm first layer
+instead of the stock 0.2 mm, for better grip and more tolerance of an uneven
+plate across its large bed. The Hi and K1 Max stay at the stock 0.2 mm.
 
 - **PLA** — nothing beyond the shared baseline
 - **ASA** — 5 interface top layers. The 0.20mm preset alone also turns
