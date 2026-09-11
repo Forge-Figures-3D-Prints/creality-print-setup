@@ -103,7 +103,16 @@ Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
 3 walls with a 0.25 mm support Z gap.
 
 - **PLA** — nothing beyond the shared baseline
-- **ASA** — 5 interface top layers
+- **ASA** — 5 interface top layers, and slowed down for fine detail such as
+  relief coins and small raised text. Outer walls at 50 mm/s, inner walls 100,
+  top surfaces 80 and gap fill 50, down from stock 200 / 300 / 200 / 250.
+  Accelerations drop to 2000 on outer walls and top surfaces, 3000 on inner
+  walls and 8000 for travel, with a 50 % accel-to-decel factor. Arachne walls
+  and a precise outer wall keep thin raised lines as walls instead of gap
+  fill. The stock speeds were never reached on ASA anyway: the filament's
+  10 mm³/s flow limit caps everything near 120 mm/s at 0.20 mm, so only values
+  below that actually slow the print. Use the 0.16mm variant for the finest
+  relief work.
 - **PLA (miniatures)** — 0.20mm only, and deliberately off the shared baseline:
   5 % adaptive cubic infill, hybrid tree supports dropped to a 25° threshold and
   restricted to critical regions only. No brim, no seam or support-interface
