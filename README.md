@@ -39,8 +39,10 @@ stock presets, so its layer-height adjustments — more bottom and top shell
 layers, faster bridging and infill — still apply underneath. Only the settings
 listed below are overridden.
 
-Common ground across all three printers: gyroid sparse infill, organic tree
-(auto) supports at a 45° threshold with small overhangs kept rather than pruned,
+Common ground across all three printers: a 0.28 mm first layer (stock is 0.2)
+for better grip and more tolerance of an uneven plate, gyroid sparse infill,
+organic tree (auto) supports at a 45° threshold with small overhangs kept rather
+than pruned,
 an outer-only brim at a 0.13 mm object gap, a back seam, and a shared support
 clearance of 0.5 mm XY with a rectilinear interface at 0.7 mm spacing. Supports
 are enabled in every profile, so turn them off per-model when they aren't
