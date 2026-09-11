@@ -122,7 +122,9 @@ Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
 3 walls with a 0.25 mm support Z gap.
 
 - **PLA** — nothing beyond the shared baseline
-- **ASA** — 5 interface top layers
+- **ASA** — 5 interface top layers. The 0.20mm preset alone also turns
+  supports off and uses a 10 mm outer brim touching the part (no object gap);
+  the 0.16mm preset keeps the shared support and brim baseline.
 - **PLA (miniatures)** — 0.20mm only, and deliberately off the shared support
   baseline: 5 % adaptive cubic infill, hybrid tree supports dropped to a 25°
   threshold and restricted to critical regions only. No brim, no seam or
