@@ -21,7 +21,7 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | --- | --- | --- | --- |
 | Creality Hi | — | PLA · PETG | PLA · PETG · ASA |
 | Creality K1 Max | PLA · PETG · ASA | — | PLA · PETG · ASA |
-| Creality K2 Plus | — | PLA | PLA · ASA · PLA (miniatures) |
+| Creality K2 Plus | — | PLA · ASA | PLA · ASA · PLA (miniatures) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
 layer height — 17 process profiles in total. The K2 Plus miniatures preset is
@@ -122,6 +122,17 @@ Hi's +5 °C over stock rather than its literal 65 °C, since the K2 Plus starts
 from a 40 °C stock value for that plate. The K2 Plus's extra cooling hardware —
 auxiliary fan, chamber temperature control, the special-area CDS fan — is left
 at stock.
+
+`Generic ASA @Creality K2 Plus 0.4 nozzle - Calibrated` takes the Hi PETG
+approach further and all but kills part cooling: 0–25 % fan instead of stock
+10–80 %, off for the first 5 layers and reaching its ceiling by layer 5, no fan
+stop/start smoothing, and overhangs at 35 % rather than 80 %. The fan-cooling
+layer time drops from 40 s to 30 s so the fan kicks in less often on small
+layers. The textured-plate first layer is 95 °C, 5 °C over stock. Unlike the PLA
+preset it does touch the enclosure: air filtration is on, and the exhaust fan
+runs at 20 % during the print instead of 60 %, to keep the chamber warm, then
+100 % instead of 80 % once it finishes to clear the fumes. Chamber temperature
+itself stays at the stock 50 °C.
 
 ## Keeping in sync with Creality Print
 
