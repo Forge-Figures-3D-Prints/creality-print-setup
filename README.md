@@ -23,11 +23,9 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | Creality K1 Max | PLA · PETG · ASA | — | PLA · PETG · ASA |
 | Creality K2 Plus | — | PLA · ASA | PLA · ASA · PLA (miniatures) |
 
-Process profiles exist at both 0.20mm and 0.16mm, and each comes in two
-versions — a fast `Standard` one and a slower `Fine Detail` one — so the counts
-above are per layer height and version: 34 process profiles in total. The K2
-Plus miniatures preset is the one exception to the layer heights: it exists at
-0.20mm only.
+Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
+layer height — 17 process profiles in total. The K2 Plus miniatures preset is
+the one exception: it exists at 0.20mm only.
 
 A folder only appears where a preset was actually saved and calibrated; a dash means there's nothing worth keeping, not that it's missing. The Hi runs fine on the stock machine preset, so it doesn't have one here.
 
@@ -56,35 +54,6 @@ that need internal support.
 What stays per-printer is the support Z gap — 0.23 mm on the Hi and K1 Max,
 0.25 mm on the K2 Plus — along with wall counts, infill density and any
 motion tuning.
-
-### Fine Detail variants
-
-Every process profile has a `Fine Detail` twin, such as
-`0.20mm Fine Detail @Creality K2 Plus 0.4 nozzle - Calibrated (ASA)` next to
-`0.20mm Standard @Creality K2 Plus 0.4 nozzle - Calibrated (ASA)`. Use it for
-relief coins, small raised text and anything else where crisp detail matters
-more than print time; use `Standard` for everything else.
-
-A Fine Detail preset carries every override of its Standard twin, plus these
-ceilings:
-
-- **Speeds** — outer walls 50 mm/s, inner walls 100, top surfaces 80, gap fill 50
-- **Accelerations** — 2000 on outer walls and top surfaces, 3000 on inner
-  walls, 8000 for travel and default, with a 50 % accel-to-decel factor
-- **Walls** — Arachne and a precise outer wall, so thin raised lines print as
-  walls instead of gap fill
-
-They are ceilings, not fixed values: where the stock preset or the Standard
-calibration was already lower, it is left alone. So the Hi keeps its stock
-travel and default acceleration, and the K1 Max ASA keeps its 5000 default
-acceleration. Most stock speeds were never reached anyway — the ASA filament
-preset's 10 mm³/s flow limit caps a 0.20 mm layer near 120 mm/s — so only values
-below that actually slow a print. The 0.16mm Fine Detail variants are the ones
-for the finest relief work.
-
-Each Fine Detail preset is a complete copy that inherits the stock Creality
-preset, not its Standard twin. A calibration change made to one therefore has
-to be made to the other as well.
 
 ### Creality Hi
 
@@ -283,13 +252,6 @@ in Creality Print as well as here. Creality Print's own default is an unsuffixed
 mystery profile in the dropdown; the explicit suffix avoids picking the wrong
 one. Rename in the app and re-export, rather than editing the `name` field here,
 so both sides keep matching.
-
-The fast and slow version of each preset differ in the label before the `@`,
-the same slot Creality uses for its own `High Quality` and `Strength` presets:
-`Standard` for the fast profile, `Fine Detail` for its slowed-down twin. The
-Fine Detail presets were created here and brought in with `import`, which
-works for a brand-new name because there is no app-side copy to fall out of
-step with.
 
 ## License
 
