@@ -21,7 +21,7 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | --- | --- | --- | --- |
 | Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K1 Max | PLA · PETG · ASA | ABS | PLA · PETG · ASA |
-| Creality K2 Plus | — | PLA · ASA · ABS | PLA · ASA · PLA (miniatures) · ASA (fine detail) |
+| Creality K2 Plus | Purge and wipe | PLA · ASA · ABS | PLA · ASA · PLA (miniatures) · ASA (fine detail) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
 layer height — 18 process profiles in total. The two K2 Plus specials are the
@@ -136,6 +136,36 @@ has no Z offset of its own yet.
 
 Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
 3 walls with a 0.25 mm support Z gap.
+
+The printer preset `Creality K2 Plus 0.4 nozzle - Purge and Wipe Nozzle After
+Each Layer` exists to stop ASA clogging the nozzle on long prints, and it worked:
+ASA had been failing at random points hours in, and stopped once this was in use.
+Everything else is identical to the stock `Creality K2 Plus 0.4 nozzle`. It only
+adds layer-change G-code that, after every layer but the first, parks at the rear
+chute, purges 6 mm of filament, runs the part fan flat out for 5 s to harden the
+blob, wipes on the silicone strip and returns. That costs roughly 9–11 s per
+layer and about 9 g of filament per 500 layers.
+
+The moves are not hand-written, and shouldn't be. The chute sits beyond the
+firmware's Y limit — the toolhead maximum is Y 352, the wiper is at Y 374–378 —
+so ordinary moves there fail with "y-axis coordinate out of range". The preset
+calls the firmware's own commands instead: `box_go_to_extrude_pos`,
+`box_nozzle_clean` and `box_move_to_safe_pos` know the positions from the
+printer's `box.cfg` and handle the limit themselves. They are bracketed by
+`box_save_fan` / `box_restore_fan`, so the cooling blast doesn't leave part
+cooling stuck at full — slicer G-code can't read the current fan speed, and
+Creality Print doesn't re-emit it each layer. `box_nozzle_clean` only wipes; the
+cooling is ours.
+
+Two things to preserve when editing it:
+
+- **Keep the commands lowercase.** Creality Print rewrites `BOX_NOZZLE_CLEAN` to
+  `BOX_NOLE_CLEAN` in its output, stripping the `ZZ` while parsing Z
+  coordinates. Klipper ignores case, so lowercase passes through and still runs.
+- **Leave `retraction_length[0]` alone.** The layer change retracts before this
+  G-code runs, so the block pushes that back out before purging and pulls the
+  same amount back after — 1.2 mm on PLA, 0.8 mm on ASA, followed from the
+  filament preset. Only the `+ 6` is the purge amount.
 
 Every K2 Plus process preset, miniatures included, prints a 0.28 mm first layer
 instead of the stock 0.2 mm, for better grip and more tolerance of an uneven
