@@ -21,11 +21,11 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | --- | --- | --- | --- |
 | Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K1 Max | PLA · PETG · ASA | ABS | PLA · PETG · ASA |
-| Creality K2 Plus | — | PLA · ASA · ABS | PLA · ASA · PLA (miniatures) |
+| Creality K2 Plus | — | PLA · ASA · ABS | PLA · ASA · PLA (miniatures) · ASA (fine detail) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
-layer height — 17 process profiles in total. The K2 Plus miniatures preset is
-the one exception: it exists at 0.20mm only.
+layer height — 18 process profiles in total. The two K2 Plus specials are the
+exceptions: the miniatures and fine-detail presets exist at 0.20mm only.
 
 The three ABS filament presets were written here, not saved from Creality
 Print after calibration. They adapt the K2 Plus ASA cooling to each machine but
@@ -66,8 +66,9 @@ small raised text:
   detail instead of dragging across it and stringing between raised features
 
 Speed, acceleration and jerk are left at Creality's stock values in every
-profile, the K1 Max ASA included. Use the 0.16mm variants for the finest relief
-work.
+profile, the K1 Max ASA included — the sole exception is the K2 Plus ASA
+fine-detail preset, which slows walls and infill deliberately. Use the 0.16mm
+variants for the finest relief work.
 
 What stays per-printer is the support Z gap — 0.23 mm on the Hi and K1 Max,
 0.25 mm on the K2 Plus — along with wall counts and infill density.
@@ -150,6 +151,19 @@ plate across its large bed. The Hi and K1 Max stay at the stock 0.2 mm.
   support-interface overrides — the point is supports that touch as little of
   the model as possible and come away clean. It does carry the fine-detail
   walls, line width and travel settings.
+- **ASA (fine detail)** — 0.20mm only, derived from the 0.12mm Fine Detail
+  preset by dropping its layer-height overrides. It is the one profile that
+  leaves Creality's stock speeds behind: a 60 mm/s outer wall against stock 200,
+  120 mm/s inner walls against 300, and 150 mm/s across infill, solid infill,
+  top surface and gap fill. Small perimeters under 6 mm slow to 30 mm/s, and the
+  first layer runs 40 mm/s for both walls and infill. Line widths go narrower
+  than the shared fine-detail baseline — 0.36 mm outer wall and top surface,
+  0.4 mm inner — with the minimum bead width down to 62.5 % of the nozzle so
+  Arachne keeps thinner features as walls. Elephant foot compensation is off,
+  infill is adaptive cubic, and the brim is 15 mm outer-only touching the part.
+  Acceleration and jerk stay stock. Bottom shell layers go back to the stock 3:
+  at 0.20 mm over a 0.28 mm first layer that reaches the same ~0.68 mm floor the
+  0.12mm preset built from 4.
 
 These carry the shared baseline above, but its values were measured on the Hi
 rather than on a K2 Plus, so they are a starting point rather than proven.
