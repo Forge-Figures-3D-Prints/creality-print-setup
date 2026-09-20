@@ -20,7 +20,7 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | Printer | Printer | Filament | Process |
 | --- | --- | --- | --- |
 | Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA |
-| Creality K1 Max | PLA · PETG · ASA | PLA · ABS | PLA · PETG · ASA |
+| Creality K1 Max | PLA · PETG · ASA | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K2 Plus | Purge and wipe | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (miniatures) · ASA (fine detail) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
@@ -29,10 +29,10 @@ exceptions: the miniatures and fine-detail presets exist at 0.20mm only.
 
 The three ABS filament presets were written here, not saved from Creality
 Print after calibration. They adapt the K2 Plus ASA cooling to each machine but
-haven't been print-tested yet. The same goes for `Generic PLA @Creality K1 Max
-0.4 nozzle - Calibrated`, which carries the Hi's PLA cooling across untested.
-There are no ABS process or printer presets. Use the ASA process preset for ABS
-parts.
+haven't been print-tested yet. The same goes for the K1 Max PLA and PETG
+filament presets, which carry the Hi's cooling for those materials across
+untested. There are no ABS process or printer presets. Use the ASA process
+preset for ABS parts.
 
 A folder only appears where a preset was actually saved and calibrated; a dash means there's nothing worth keeping, not that it's missing. The Hi runs fine on the stock machine preset, so it doesn't have one here.
 
@@ -140,6 +140,25 @@ the textured plate, the one the K1 Max ships with, at 55 °C. Swap the key to
 `hot_plate_temp_initial_layer` or `cool_plate_temp_initial_layer` if you print
 PLA on a different sheet; the value is 55 either way. Like the other PLA
 presets it leaves air filtration alone.
+
+`Generic PETG @Creality K1 Max 0.4 nozzle - Calibrated` is the Hi PETG preset
+moved across, the same way the K2 Plus one was: 20–30 % fan against stock
+40–90 %, off for the first 5 layers and at its ceiling by layer 5, and no fan
+stop/start smoothing. Those fan figures are absolute percentages, so they
+transfer unchanged, and overhangs are left at the stock 100 %, as on the Hi.
+
+Its first-layer bump goes on the textured plate at 75 °C, following the Hi's
++5 °C over stock rather than its literal 85 °C, since the K1 Max starts from
+70 °C there. Unlike PLA and ABS the K1 Max does report an epoxy-resin plate for
+PETG, at the same 70 °C, but the bump goes on the textured plate anyway — that
+is the sheet the machine ships with. Swap the key to
+`epoxy_resin_plate_temp_initial_layer` or `hot_plate_temp_initial_layer` if you
+print PETG on a different sheet; both sit at 70 °C stock too, so the value is 75
+on any of the three. The cool plate is the odd one out, at 60 °C stock, so use
+65 in `cool_plate_temp_initial_layer` there. Like the other PETG presets it
+leaves air filtration alone. PETG already has its own printer preset for the
+0.175 mm Z offset and process presets at both layer heights, so this completes
+the set.
 
 `Generic ABS @Creality K1 Max 0.4 nozzle - Calibrated` carries the K2 Plus ASA
 regime unchanged: 0–25 % part cooling instead of stock 10–60 %, off for the
@@ -288,7 +307,7 @@ local-only until you next edit and save each one.
 python3 tools/test_sync.py
 ```
 
-11 tests covering both directions, run against a synthetic Creality Print
+13 tests covering both directions, run against a synthetic Creality Print
 install in a temp directory. Nothing reads or writes your real preset folder,
 so it is safe to run any time. They cover the things that would quietly lose a
 profile: filename-vs-internal-name identity, round-trip fidelity, export not
