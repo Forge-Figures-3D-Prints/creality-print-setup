@@ -21,10 +21,10 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | --- | --- | --- | --- |
 | Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K1 Max | PLA · PETG · ASA | ABS | PLA · PETG · ASA |
-| Creality K2 Plus | Purge and wipe | PLA · ASA · ABS | PLA · ASA · PLA (miniatures) · ASA (fine detail) |
+| Creality K2 Plus | Purge and wipe | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (miniatures) · ASA (fine detail) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
-layer height — 18 process profiles in total. The two K2 Plus specials are the
+layer height — 22 process profiles in total. The two K2 Plus specials are the
 exceptions: the miniatures and fine-detail presets exist at 0.20mm only.
 
 The three ABS filament presets were written here, not saved from Creality
@@ -134,8 +134,9 @@ has no Z offset of its own yet.
 
 ### Creality K2 Plus
 
-Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, both at
-3 walls with a 0.25 mm support Z gap.
+Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, all at
+3 walls. The PETG and ASA presets carry the 0.25 mm support Z gap; the PLA pair
+does not set it and so runs at the stock 0.2 mm.
 
 The printer preset `Creality K2 Plus 0.4 nozzle - Purge and Wipe Nozzle After
 Each Layer` exists to stop ASA clogging the nozzle on long prints, and it worked:
@@ -172,6 +173,11 @@ instead of the stock 0.2 mm, for better grip and more tolerance of an uneven
 plate across its large bed. The Hi and K1 Max stay at the stock 0.2 mm.
 
 - **PLA** — nothing beyond the shared baseline
+- **PETG** — the shared baseline plus the 0.25 mm support Z gap, and otherwise
+  identical to the PLA pair. Derived from the Hi PETG process presets, which are
+  themselves byte-identical to the Hi PLA ones: PETG needs no process tuning of
+  its own on either machine, only its own cooling. The Hi's 100 % raft first
+  layer is left out, as on every other K2 Plus preset
 - **ASA** — 5 interface top layers. The 0.20mm preset alone also turns
   supports off and uses a 10 mm outer brim touching the part (no object gap);
   the 0.16mm preset keeps the shared support and brim baseline.
@@ -207,6 +213,17 @@ Hi's +5 °C over stock rather than its literal 65 °C, since the K2 Plus starts
 from a 40 °C stock value for that plate. The K2 Plus's extra cooling hardware —
 auxiliary fan, chamber temperature control, the special-area CDS fan — is left
 at stock.
+
+`Generic PETG @Creality K2 Plus 0.4 nozzle - Calibrated` is the Hi PETG preset
+moved across: 20–30 % fan against stock 40–80 %, off for the first 5 layers and
+at its ceiling by layer 5, and no fan stop/start smoothing. Those fan figures are
+absolute percentages, so they transfer unchanged. The epoxy-resin-plate first
+layer is 65 °C, following the Hi's +5 °C over stock rather than its literal
+85 °C, since the K2 Plus starts from a 60 °C stock value for that plate. Set
+`textured_plate_temp_initial_layer` to 75 instead if you run PETG on the
+textured plate, as the K2 Plus ASA and ABS presets do. Like the PLA preset it
+leaves the K2 Plus's auxiliary fan, chamber control and CDS fan at stock, and
+does not touch air filtration.
 
 `Generic ASA @Creality K2 Plus 0.4 nozzle - Calibrated` takes the Hi PETG
 approach further and all but kills part cooling: 0–25 % fan instead of stock
