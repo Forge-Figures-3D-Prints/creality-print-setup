@@ -20,7 +20,7 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | Printer | Printer | Filament | Process |
 | --- | --- | --- | --- |
 | Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA |
-| Creality K1 Max | PLA · PETG · ASA | ABS | PLA · PETG · ASA |
+| Creality K1 Max | PLA · PETG · ASA | PLA · ABS | PLA · PETG · ASA |
 | Creality K2 Plus | Purge and wipe | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (miniatures) · ASA (fine detail) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
@@ -29,8 +29,10 @@ exceptions: the miniatures and fine-detail presets exist at 0.20mm only.
 
 The three ABS filament presets were written here, not saved from Creality
 Print after calibration. They adapt the K2 Plus ASA cooling to each machine but
-haven't been print-tested yet. There are no ABS process or printer presets. Use
-the ASA process preset for ABS parts.
+haven't been print-tested yet. The same goes for `Generic PLA @Creality K1 Max
+0.4 nozzle - Calibrated`, which carries the Hi's PLA cooling across untested.
+There are no ABS process or printer presets. Use the ASA process preset for ABS
+parts.
 
 A folder only appears where a preset was actually saved and calibrated; a dash means there's nothing worth keeping, not that it's missing. The Hi runs fine on the stock machine preset, so it doesn't have one here.
 
@@ -123,14 +125,29 @@ Process presets inherit `0.20mm Standard @Creality K1 Max 0.4 nozzle`, all at 3 
 - **PETG** — 10 mm outer brim, 0.23 mm support Z gap
 - **ASA** — the heavily tuned one. 4 walls, 25 % infill, monotonic top surface, a 0.21 mm support Z gap, slowdown for curled perimeters, elephant foot and XY hole compensation. Speed, acceleration and jerk are stock like every other profile; its former hand-tuned ladder (120 mm/s outer wall at 2500, a 30 mm/s first layer at 500, 40 / 25 / 20 mm/s overhangs, 400 mm/s travel) is recoverable from commit `fd470b1` if ASA first layers or overhangs suffer without it
 
-`Generic ABS @Creality K1 Max 0.4 nozzle - Calibrated` is the K1 Max's only
-filament preset. It carries the K2 Plus ASA regime unchanged: 0–25 % part
-cooling instead of stock 10–60 %, off for the first 5 layers and at its ceiling
-by layer 5, no fan stop/start smoothing, and overhangs at 35 % rather than 80 %.
-Air filtration is on, with the exhaust fan at 20 % while printing and 100 % once
-finished. Plate temperature stays at the stock 100 °C, the K1 Max bed's
-maximum, so it has no first-layer bump. There's no ABS printer preset, so ABS
-has no Z offset of its own yet.
+`Generic PLA @Creality K1 Max 0.4 nozzle - Calibrated` carries the Hi's PLA
+cooling unchanged: 40 % minimum fan reaching full by layer 10, off for the first
+5 layers, and overhangs at 75 % instead of stock 100 %. Those are absolute
+percentages, so they move across machines untouched, and the fan ceiling is left
+at the stock 100 %.
+
+Its first-layer plate bump is the one value that could not be translated
+literally. The Hi and K2 Plus presets both bump
+`epoxy_resin_plate_temp_initial_layer`, but the K1 Max has no epoxy-resin plate
+— stock reports it as 0 °C on both PLA and ABS. Its three real plate types
+(hot, textured and cool) all sit at 50 °C stock for PLA, so the +5 °C goes on
+the textured plate, the one the K1 Max ships with, at 55 °C. Swap the key to
+`hot_plate_temp_initial_layer` or `cool_plate_temp_initial_layer` if you print
+PLA on a different sheet; the value is 55 either way. Like the other PLA
+presets it leaves air filtration alone.
+
+`Generic ABS @Creality K1 Max 0.4 nozzle - Calibrated` carries the K2 Plus ASA
+regime unchanged: 0–25 % part cooling instead of stock 10–60 %, off for the
+first 5 layers and at its ceiling by layer 5, no fan stop/start smoothing, and
+overhangs at 35 % rather than 80 %. Air filtration is on, with the exhaust fan
+at 20 % while printing and 100 % once finished. Plate temperature stays at the
+stock 100 °C, the K1 Max bed's maximum, so it has no first-layer bump. There's
+no ABS printer preset, so ABS has no Z offset of its own yet.
 
 ### Creality K2 Plus
 
