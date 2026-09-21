@@ -21,11 +21,11 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | --- | --- | --- | --- |
 | Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K1 Max | PLA · PETG · ASA | PLA · PETG · ABS | PLA · PETG · ASA |
-| Creality K2 Plus | Purge and wipe (every layer · 5th · 10th) · wipe only | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (miniatures) · ASA (fine detail) |
+| Creality K2 Plus | Purge and wipe (every layer · 5th · 10th) · wipe only | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (figurines) · ASA (fine detail) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
 layer height — 22 process profiles in total. The two K2 Plus specials are the
-exceptions: the miniatures and fine-detail presets exist at 0.20mm only.
+exceptions: the figurines and fine-detail presets exist at 0.20mm only.
 
 The three ABS filament presets were written here, not saved from Creality
 Print after calibration. They adapt the K2 Plus ASA cooling to each machine but
@@ -220,7 +220,7 @@ Two things to preserve when editing it:
   same amount back after — 1.2 mm on PLA, 0.8 mm on ASA, followed from the
   filament preset. Only the `+ 18`, and the 2 mm tail after it, are the purge.
 
-Every K2 Plus process preset, miniatures included, prints a 0.28 mm first layer
+Every K2 Plus process preset, figurines included, prints a 0.28 mm first layer
 instead of the stock 0.2 mm, for better grip and more tolerance of an uneven
 plate across its large bed. The Hi and K1 Max stay at the stock 0.2 mm.
 
@@ -229,16 +229,22 @@ plate across its large bed. The Hi and K1 Max stay at the stock 0.2 mm.
   identical to the PLA pair. Derived from the Hi PETG process presets, which are
   themselves byte-identical to the Hi PLA ones: PETG needs no process tuning of
   its own on either machine, only its own cooling. The Hi's 100 % raft first
-  layer is left out, as on every other K2 Plus preset
+  layer is left out, as on every K2 Plus preset but the figurines one
 - **ASA** — 5 interface top layers. The 0.20mm preset alone also turns
   supports off and uses a 10 mm outer brim touching the part (no object gap);
   the 0.16mm preset keeps the shared support and brim baseline.
-- **PLA (miniatures)** — 0.20mm only, and deliberately off the shared support
-  baseline: 5 % adaptive cubic infill, hybrid tree supports dropped to a 25°
-  threshold and restricted to critical regions only. No brim, no seam or
-  support-interface overrides — the point is supports that touch as little of
-  the model as possible and come away clean. It does carry the fine-detail
-  walls, line width and travel settings.
+- **PLA (figurines)** — 0.20mm only. It replaces an earlier miniatures preset
+  (still in git history) and starts from the same place — 5 % adaptive cubic
+  infill, hybrid tree supports — but aims at a clean support interface rather
+  than the least possible contact. Where the miniatures preset dropped to a 25°
+  threshold and supported critical regions only, this one sits at 45° with the
+  interface fully specified: 3 top layers, 0.7 mm rectilinear spacing, a
+  0.15 mm² minimum interface area and a 0.5 mm XY gap to the part. Branches are
+  single-walled, 5 mm across at 10 mm spacing over a rectilinear-grid base, and
+  small overhangs are supported rather than skipped. Elsewhere it forces the
+  seam to the back, adds an outer-only brim with a 0.13 mm object gap, and is
+  the one K2 Plus preset carrying a 100 % raft first layer, expanded 5 mm.
+  Outer walls are precise at 0.38 mm line width, with crossing walls reduced.
 - **ASA (fine detail)** — 0.20mm only, derived from the 0.12mm Fine Detail
   preset by dropping its layer-height overrides. It is the one profile that
   leaves Creality's stock speeds behind: a 60 mm/s outer wall against stock 200,
