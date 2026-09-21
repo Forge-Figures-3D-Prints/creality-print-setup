@@ -1,0 +1,10 @@
+{
+    "base_id": "99238",
+    "from": "User",
+    "inherits": "Creality K2 Plus 0.4 nozzle",
+    "is_custom_defined": "0",
+    "layer_change_gcode": ";AFTER_LAYER_CHANGE\n;[layer_z]\n{if layer_num > 0 and (layer_num % 5) == 0}\n; purge, cool, then wipe on the printer's own chute\nG1 Z{layer_z + 0.4} F600\nbox_save_fan\nbox_go_to_extrude_pos\nM83\n; bulk purge — heavy enough that the blob's own weight carries it down\nG1 E{retraction_length[0] + 18} F210\n; slow tail so the strand droops and anchors in the chute\nG1 E2 F60\n; snap it off\nG1 E-{retraction_length[0]} F2400\nM106 S255\nG4 P8000\nbox_nozzle_clean\nbox_restore_fan\nbox_move_to_safe_pos\nM83\nG1 Z{layer_z} F600\n{endif}",
+    "name": "Creality K2 Plus 0.4 nozzle - Purge & Wipe Nozzle Every 5th Layer",
+    "printer_settings_id": "Creality K2 Plus 0.4 nozzle - Purge & Wipe Nozzle Every 5th Layer",
+    "version": "26.8.29.18"
+}
