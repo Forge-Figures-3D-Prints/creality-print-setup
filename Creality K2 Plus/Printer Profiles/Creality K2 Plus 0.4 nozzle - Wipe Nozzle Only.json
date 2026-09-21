@@ -1,0 +1,10 @@
+{
+    "base_id": "99238",
+    "from": "User",
+    "inherits": "Creality K2 Plus 0.4 nozzle",
+    "is_custom_defined": "0",
+    "layer_change_gcode": ";AFTER_LAYER_CHANGE\n;[layer_z]\n{if layer_num > 0}\n; wipe only — no purge\nG1 Z{layer_z + 0.4} F600\nbox_save_fan\nbox_nozzle_clean\nbox_restore_fan\nbox_move_to_safe_pos\nM83\nG1 Z{layer_z} F600\n{endif}",
+    "name": "Creality K2 Plus 0.4 nozzle - Wipe Nozzle Only",
+    "printer_settings_id": "Creality K2 Plus 0.4 nozzle - Wipe Nozzle Only",
+    "version": "26.8.29.18"
+}

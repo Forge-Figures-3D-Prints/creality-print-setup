@@ -21,7 +21,7 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | --- | --- | --- | --- |
 | Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K1 Max | PLA · PETG · ASA | PLA · PETG · ABS | PLA · PETG · ASA |
-| Creality K2 Plus | Purge and wipe | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (miniatures) · ASA (fine detail) |
+| Creality K2 Plus | Purge and wipe (every layer · 5th · 10th) · wipe only | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (miniatures) · ASA (fine detail) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
 layer height — 22 process profiles in total. The two K2 Plus specials are the
@@ -174,14 +174,30 @@ Process presets inherit `0.20mm Standard @Creality K2 Plus 0.4 nozzle`, all at
 3 walls. The PETG and ASA presets carry the 0.25 mm support Z gap; the PLA pair
 does not set it and so runs at the stock 0.2 mm.
 
-The printer preset `Creality K2 Plus 0.4 nozzle - Purge and Wipe Nozzle After
-Each Layer` exists to stop ASA clogging the nozzle on long prints, and it worked:
-ASA had been failing at random points hours in, and stopped once this was in use.
-Everything else is identical to the stock `Creality K2 Plus 0.4 nozzle`. It only
-adds layer-change G-code that, after every layer but the first, parks at the rear
-chute, purges 6 mm of filament, runs the part fan flat out for 5 s to harden the
-blob, wipes on the silicone strip and returns. That costs roughly 9–11 s per
-layer and about 9 g of filament per 500 layers.
+Four printer presets exist to stop ASA clogging the nozzle on long prints, and
+they worked: ASA had been failing at random points hours in, and stopped once
+this was in use. Each is identical to the stock `Creality K2 Plus 0.4 nozzle`
+apart from layer-change G-code that parks at the rear chute, purges, runs the
+part fan flat out to harden the blob, wipes on the silicone strip and returns.
+
+They differ only in how often that runs, so the cost can be dialled back on
+prints that don't need it every layer:
+
+| Preset suffix | Runs | Purge | Per 500 layers |
+| --- | --- | --- | --- |
+| `- Purge and Wipe Nozzle After Each Layer` | every layer but the first | 20 mm | ~30 g, ~2.5 h |
+| `- Purge & Wipe Nozzle Every 5th Layer` | every 5th layer | 20 mm | ~6 g, ~30 min |
+| `- Purge & Wipe Nozzle Every 10th Layer` | every 10th layer | 20 mm | ~3 g, ~15 min |
+| `- Wipe Nozzle Only` | every layer but the first | none | no filament, ~35 min |
+
+The purge is 18 mm of bulk at F210 followed by a 2 mm tail at F60. The bulk is
+heavy enough that the blob's own weight carries it down into the chute; the slow
+tail leaves a drooping strand that anchors there, rather than one that springs
+back up with the nozzle. The part fan then runs flat out for 8 s to harden it
+before the wipe. Wipe-only skips all of that and just cleans the tip.
+
+The time and filament figures are worked out from the G-code, not measured —
+roughly 18 s per purge-and-wipe, on 1.75 mm PLA.
 
 The moves are not hand-written, and shouldn't be. The chute sits beyond the
 firmware's Y limit — the toolhead maximum is Y 352, the wiper is at Y 374–378 —
@@ -202,7 +218,7 @@ Two things to preserve when editing it:
 - **Leave `retraction_length[0]` alone.** The layer change retracts before this
   G-code runs, so the block pushes that back out before purging and pulls the
   same amount back after — 1.2 mm on PLA, 0.8 mm on ASA, followed from the
-  filament preset. Only the `+ 6` is the purge amount.
+  filament preset. Only the `+ 18`, and the 2 mm tail after it, are the purge.
 
 Every K2 Plus process preset, miniatures included, prints a 0.28 mm first layer
 instead of the stock 0.2 mm, for better grip and more tolerance of an uneven
