@@ -19,13 +19,14 @@ Creality Print keeps user presets in an application-support folder that gets wip
 
 | Printer | Printer | Filament | Process |
 | --- | --- | --- | --- |
-| Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA |
+| Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA · PLA (keyrings) |
 | Creality K1 Max | PLA · PETG · ASA | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K2 Plus | Purge and wipe (every layer · 5th · 10th) · wipe only | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (figurines) · ASA (fine detail) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
-layer height — 22 process profiles in total. The two K2 Plus specials are the
-exceptions: the figurines and fine-detail presets exist at 0.20mm only.
+layer height — 23 process profiles in total. The specials are the exceptions:
+the K2 Plus figurines and fine-detail presets exist at 0.20mm only, and the Hi
+keyrings preset at 0.12mm only.
 
 The three ABS filament presets were written here, not saved from Creality
 Print after calibration. They adapt the K2 Plus ASA cooling to each machine but
@@ -69,7 +70,8 @@ small raised text:
 
 Speed, acceleration and jerk are left at Creality's stock values in every
 profile, the K1 Max ASA included — the sole exception is the K2 Plus ASA
-fine-detail preset, which slows walls and infill deliberately. Use the 0.16mm
+fine-detail preset and the Hi keyrings preset, which slow walls and infill
+deliberately. Use the 0.16mm
 variants for the finest relief work.
 
 What stays per-printer is the support Z gap — 0.23 mm on the Hi and K1 Max,
@@ -85,6 +87,24 @@ Process presets inherit `0.20mm Standard @Creality Hi 0.4 nozzle`. All three use
 
 All three share the 0.23 mm support Z gap, so supports release cleanly on any
 material.
+
+- **PLA (keyrings)** — 0.12mm only, inheriting `0.12mm Standard @Creality Hi
+  0.4 nozzle`, for flat keyrings carrying small raised text. It departs from
+  the shared baseline where keyrings need it: supports stay at the stock off,
+  there's no raft first layer, and it's the one Hi preset that slows down —
+  60 mm/s outer wall against stock 150, 120 mm/s inner walls against 350,
+  150 mm/s infill and solid infill, 100 mm/s top surface and gap fill.
+  Perimeters under 6 mm, which covers most letters, drop to 30 mm/s. Line
+  widths follow the K2 Plus ASA fine-detail preset — 0.36 mm outer wall and top
+  surface, 0.4 mm inner — with the minimum bead width at 62.5 % and the minimum
+  feature size at 15 % (stock 25 %) so Arachne keeps thin strokes and serifs
+  rather than dropping them. Top surfaces are ironed, which flattens both the
+  background face and the tops of the letters; set ironing back to none if
+  letter edges start to blob. It keeps 3 walls for a strong ring hole, gyroid
+  infill, the back seam, avoid-crossing-walls and the outer-only brim at a
+  0.13 mm gap. Acceleration, jerk, the 0.2 mm first layer and elephant foot
+  compensation stay stock. Written here rather than saved after calibration,
+  so it hasn't been print-tested yet.
 
 The filament preset `Generic PETG @Creality Hi 0.4 nozzle - Calibrated` turns cooling right down: 20–30 % fan, off entirely for the first 5 layers, no fan stop/start smoothing. That's what keeps layer adhesion and stops warping on PETG.
 
@@ -354,7 +374,7 @@ Print major upgrade, since the preset format is versioned.
 
 ### Choosing what gets backed up
 
-This repo curates the 0.20mm calibrated profiles. Other layer heights and
+This repo curates the 0.20mm and 0.16mm calibrated profiles, plus the odd 0.12mm special. Other layer heights and
 one-off experiments stay in Creality Print on purpose, and most have since been
 deleted there. `.syncignore` keeps them from being picked up again, as globs
 matched against a preset's internal name:
