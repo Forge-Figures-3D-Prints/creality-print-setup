@@ -109,7 +109,7 @@ material.
 - **PLA (keyrings, 0.2 nozzle)** — the same idea on the 0.2 mm nozzle, for text
   too small for the 0.4. It inherits `0.1mm Standard @Creality Hi 0.2 nozzle`,
   which is already slow (100 mm/s outer wall) with 0.22 mm lines, 4 walls and
-  7 top layers, and pair it with `Generic PLA @Creality Hi 0.2 nozzle -
+  7 top layers. Pair it with `Generic PLA @Creality Hi 0.2 nozzle -
   Calibrated`, whose 1 mm³/s limit caps every feature near 45 mm/s anyway. On
   top it slows the outer wall to 40 mm/s and perimeters under 6 mm to 20 mm/s,
   and carries the same Arachne walls, 62.5 % bead and 15 % feature minimums,
