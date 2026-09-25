@@ -19,14 +19,15 @@ Creality Print keeps user presets in an application-support folder that gets wip
 
 | Printer | Printer | Filament | Process |
 | --- | --- | --- | --- |
-| Creality Hi | — | PLA · PLA (0.2 nozzle) · PETG · ABS | PLA · PETG · ASA · PLA (keyrings) |
+| Creality Hi | — | PLA · PLA (0.2 nozzle) · PETG · ABS | PLA · PETG · ASA · PLA (keyrings, 0.4 and 0.2 nozzle) |
 | Creality K1 Max | PLA · PETG · ASA | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K2 Plus | Purge and wipe (every layer · 5th · 10th) · wipe only | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (figurines) · ASA (fine detail) |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
-layer height — 23 process profiles in total. The specials are the exceptions:
+layer height — 24 process profiles in total. The specials are the exceptions:
 the K2 Plus figurines and fine-detail presets exist at 0.20mm only, and the Hi
-keyrings preset at 0.12mm only.
+keyrings presets at a single layer height each — 0.12mm on the 0.4 nozzle,
+0.10mm on the 0.2.
 
 The three ABS filament presets were written here, not saved from Creality
 Print after calibration. They adapt the K2 Plus ASA cooling to each machine but
@@ -105,6 +106,18 @@ material.
   0.13 mm gap. Acceleration, jerk, the 0.2 mm first layer and elephant foot
   compensation stay stock. Written here rather than saved after calibration,
   so it hasn't been print-tested yet.
+- **PLA (keyrings, 0.2 nozzle)** — the same idea on the 0.2 mm nozzle, for text
+  too small for the 0.4. It inherits `0.1mm Standard @Creality Hi 0.2 nozzle`,
+  which is already slow (100 mm/s outer wall) with 0.22 mm lines, 4 walls and
+  7 top layers, and pair it with `Generic PLA @Creality Hi 0.2 nozzle -
+  Calibrated`, whose 1 mm³/s limit caps every feature near 45 mm/s anyway. On
+  top it slows the outer wall to 40 mm/s and perimeters under 6 mm to 20 mm/s,
+  and carries the same Arachne walls, 62.5 % bead and 15 % feature minimums,
+  top ironing (spacing tightened to 0.1 mm for the narrower line), gyroid infill,
+  back seam, avoid-crossing-walls and outer-only brim at 0.13 mm. The first
+  layer goes from stock 0.1 mm to 0.15 mm, because a 0.1 mm first layer on the
+  open-frame Hi leaves almost no tolerance for an uneven plate. Line widths and
+  wall count stay stock. Also untested.
 
 The filament preset `Generic PETG @Creality Hi 0.4 nozzle - Calibrated` turns cooling right down: 20–30 % fan, off entirely for the first 5 layers, no fan stop/start smoothing. That's what keeps layer adhesion and stops warping on PETG.
 
