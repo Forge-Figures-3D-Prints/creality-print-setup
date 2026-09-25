@@ -19,7 +19,7 @@ Creality Print keeps user presets in an application-support folder that gets wip
 
 | Printer | Printer | Filament | Process |
 | --- | --- | --- | --- |
-| Creality Hi | — | PLA · PETG · ABS | PLA · PETG · ASA · PLA (keyrings) |
+| Creality Hi | — | PLA · PLA (0.2 nozzle) · PETG · ABS | PLA · PETG · ASA · PLA (keyrings) |
 | Creality K1 Max | PLA · PETG · ASA | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K2 Plus | Purge and wipe (every layer · 5th · 10th) · wipe only | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (figurines) · ASA (fine detail) |
 
@@ -112,6 +112,17 @@ The filament preset `Generic PETG @Creality Hi 0.4 nozzle - Calibrated` turns co
 killing it: 40 % minimum fan reaching full by layer 10, off for the first 5
 layers, overhangs at 75 % instead of 100 %, and the epoxy-resin-plate first
 layer at 65 °C. This is the preset the K2 Plus PLA one was derived from.
+
+`Generic PLA @Creality Hi 0.2 nozzle - Calibrated` carries that same cooling
+and 65 °C plate onto the 0.2 mm nozzle. Creality ships no Generic PLA for the
+Hi's 0.2 mm nozzle, so it inherits `CR-PLA @Creality Hi 0.2 nozzle` and relabels
+the vendor as Generic. That base supplies the small-nozzle tuning: a 1 mm³/s
+volumetric limit, 0.95 flow, pressure advance on, and layer-time slowdown at
+14 s down to 10 mm/s. Keep an eye on the fan-off first 5 layers. At the 0.1 mm
+or finer layers a 0.2 mm nozzle runs, that's only about half the height it
+covers on the 0.4. It needs the `Creality Hi 0.2 nozzle` printer added in
+Creality Print to show up, and it was written here rather than calibrated, so
+it hasn't been print-tested yet.
 
 `Generic ABS @Creality Hi 0.4 nozzle - Calibrated` takes the K2 Plus ASA
 cooling: 0–25 % fan instead of stock 40–70 %, off for the first 5 layers and
