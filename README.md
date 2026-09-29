@@ -27,7 +27,7 @@ Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
 layer height — 24 process profiles in total. The specials are the exceptions:
 the K2 Plus figurines and fine-detail presets exist at 0.20mm only, and the Hi
 keyrings presets at a single layer height each — 0.12mm on the 0.4 nozzle,
-0.10mm on the 0.2 — and the Hi detail-text preset at 0.12mm only.
+0.10mm on the 0.2 — and the Hi detail-text preset at 0.20mm only.
 
 The three ABS filament presets were written here, not saved from Creality
 Print after calibration. They adapt the K2 Plus ASA cooling to each machine but
@@ -118,25 +118,29 @@ material.
   layer goes from stock 0.1 mm to 0.15 mm, because a 0.1 mm first layer on the
   open-frame Hi leaves almost no tolerance for an uneven plate. Line widths and
   wall count stay stock. Also untested.
-- **PLA (detail text)** — 0.12mm only, inheriting `0.12mm Standard @Creality
-  Hi 0.4 nozzle`, for small text and fine lettering, above all text that sits
-  on the first layer. The other Hi presets leave three stock first-layer values
-  that damage thin strokes: 0.15 mm elephant foot compensation shrinks every
-  first-layer outline by that much on each side, a 0.5 mm first-layer line is too
-  wide for them, and an 85 % first-layer minimum bead drops anything under
-  ~0.43 mm. Together these broke strokes apart and gave jagged letter edges.
-  This preset turns elephant foot compensation off, prints the first layer at
-  0.42 mm lines with a 62.5 % minimum bead, and slows it to 30 mm/s (40 mm/s
-  infill). Everywhere else it follows the keyrings preset — Arachne walls,
-  62.5 % bead and 15 % feature minimums, 0.36 mm outer wall and top surface,
-  0.4 mm inner, 60 / 120 / 150 mm/s walls and infill, 30 mm/s perimeters under
-  6 mm, 3 walls, gyroid, back seam, avoid-crossing-walls, outer-only brim at
-  0.13 mm. Outer-wall acceleration drops from 5000 to 2000 for sharper
-  corners. The wall transition filter margin goes from 25 % to 40 %, so Arachne
-  changes bead count less often along a stroke. That removes the notches it
-  leaves at each change. There is no ironing, and supports stay at the stock
-  off. Without elephant foot compensation the first layer of a large part may
-  flare slightly. Written here rather than calibrated, so it is untested.
+- **PLA (detail text)** — 0.20mm only, built from the saved Creality Print
+  copy of the 0.20mm PLA preset, for small text and fine lettering, above all
+  text that sits on the first layer. That app copy has moved on from the one
+  backed up here. It uses a 10 mm brim touching the part, adaptive cubic infill,
+  hybrid tree supports with 3 top and bottom interface layers, and the stock
+  support Z gap. Supports are not limited to the plate. The detail-text preset
+  keeps all of that.
+  The other Hi presets leave three stock first-layer values that damage thin
+  strokes: 0.15 mm elephant foot compensation shrinks every first-layer outline
+  by that much on each side, a 0.5 mm first-layer line is too wide for them, and
+  an 85 % first-layer minimum bead drops anything under ~0.43 mm. Together
+  these broke strokes apart and gave jagged letter edges. This preset turns
+  elephant foot compensation off, prints the first layer at 0.42 mm lines with
+  a 62.5 % minimum bead, and slows it to 30 mm/s (40 mm/s infill). Above the
+  first layer it borrows from the keyrings preset — 62.5 % bead and 15 % feature
+  minimums, 0.36 mm outer wall and top surface, 0.4 mm inner, 60 / 120 /
+  150 mm/s walls and infill, 100 mm/s top surface and gap fill, 30 mm/s
+  perimeters under 6 mm. Outer-wall acceleration drops from 5000 to 2000 for
+  sharper corners. The wall transition filter margin goes from 25 % to 40 %, so
+  Arachne changes bead count less often along a stroke. That removes the
+  notches it leaves at each change. Without elephant foot compensation the first
+  layer of a large part may flare slightly. Written here rather than calibrated,
+  so it is untested.
 
 The filament preset `Generic PETG @Creality Hi 0.4 nozzle - Calibrated` turns cooling right down: 20–30 % fan, off entirely for the first 5 layers, no fan stop/start smoothing. That's what keeps layer adhesion and stops warping on PETG.
 
