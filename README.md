@@ -22,7 +22,7 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | Creality Hi | — | PLA · PLA (0.2 nozzle) · PETG · ABS | PLA · PETG · ASA · PLA (keyrings, 0.4 and 0.2 nozzle) · PLA (detail text) |
 | Creality K1 Max | PLA · PETG · ASA | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K2 Plus | Purge and wipe (every layer · 5th · 10th) · wipe only | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (figurines) · ASA (fine detail) |
-| Creality Ender-5 Max | — | — | PLA |
+| Creality Ender-5 Max | — | PLA | PLA |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
 layer height — 26 process profiles in total. The specials are the exceptions:
@@ -389,8 +389,16 @@ first-layer line against 0.5, 80 mm/s first-layer infill against 105, and
 calibrated, so it hasn't been print-tested yet.
 
 There's no 0.16mm variant, because Creality ships no 0.16mm stock preset for
-the Ender-5 Max. There are no Ender-5 Max printer or filament presets in the
-repo yet.
+the Ender-5 Max. There's no Ender-5 Max printer preset in the repo yet.
+
+`Generic PLA @Creality Ender-5 Max 0.4 nozzle - Calibrated` was saved from
+Creality Print, not written here. It uses the same PLA cooling as the Hi, K1 Max
+and K2 Plus presets: 40 % minimum fan reaching full by layer 10 (stock is 100 %
+from the start), off for the first 5 layers instead of 1, and overhangs at 75 %
+instead of 100 %. The epoxy-resin-plate first layer is 60 °C, 5 °C over stock.
+That is the plate the Ender-5 Max ships with, so the bump goes there rather than
+on the textured plate. It is the one PLA preset that also changes the layer-time
+slowdown: printing slows on layers faster than 10 s, against a stock 12 s.
 
 ## Keeping in sync with Creality Print
 
