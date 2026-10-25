@@ -22,12 +22,15 @@ Creality Print keeps user presets in an application-support folder that gets wip
 | Creality Hi | — | PLA · PLA (0.2 nozzle) · PETG · ABS | PLA · PETG · ASA · PLA (keyrings, 0.4 and 0.2 nozzle) · PLA (detail text) |
 | Creality K1 Max | PLA · PETG · ASA | PLA · PETG · ABS | PLA · PETG · ASA |
 | Creality K2 Plus | Purge and wipe (every layer · 5th · 10th) · wipe only | PLA · PETG · ASA · ABS | PLA · PETG · ASA · PLA (figurines) · ASA (fine detail) |
+| Creality Ender-5 Max | — | — | PLA |
 
 Process profiles exist at both 0.20mm and 0.16mm, so the counts above are per
-layer height — 24 process profiles in total. The specials are the exceptions:
+layer height — 26 process profiles in total. The specials are the exceptions:
 the K2 Plus figurines and fine-detail presets exist at 0.20mm only, and the Hi
 keyrings presets at a single layer height each — 0.12mm on the 0.4 nozzle,
-0.10mm on the 0.2 — and the Hi detail-text preset at 0.20mm only.
+0.10mm on the 0.2 — and the Hi detail-text preset at 0.20mm only. The
+Ender-5 Max PLA preset also exists at 0.2mm only, because Creality ships no
+0.16mm stock preset for that printer to inherit.
 
 The three ABS filament presets were written here, not saved from Creality
 Print after calibration. They adapt the K2 Plus ASA cooling to each machine but
@@ -48,7 +51,7 @@ stock presets, so its layer-height adjustments — more bottom and top shell
 layers, faster bridging and infill — still apply underneath. Only the settings
 listed below are overridden.
 
-Common ground across all three printers: gyroid sparse infill, organic tree
+Common ground across every printer: gyroid sparse infill, organic tree
 (auto) supports at a 45° threshold with small overhangs kept rather than pruned,
 an outer-only brim at a 0.13 mm object gap, a back seam, and a shared support
 clearance of 0.5 mm XY with a rectilinear interface at 0.7 mm spacing. Supports
@@ -368,6 +371,26 @@ exhaust. The textured-plate first layer is 105 °C, again 5 °C over stock, whic
 the K2 Plus bed can reach. The fan-cooling layer time isn't overridden because
 stock ABS already uses the 30 s the ASA preset sets. Chamber temperature stays
 at the stock 50 °C.
+
+### Creality Ender-5 Max
+
+The PLA process preset is the K2 Plus 0.20mm PLA preset moved across
+unchanged, retargeted to inherit `0.2mm Standard @Creality Ender-5 Max 0.4
+nozzle`. Creality spells that stock preset `0.2mm` rather than `0.20mm`, so the
+calibrated preset keeps the same spelling. It carries the shared baseline above
+and nothing else, including the K2 Plus's 0.28 mm first layer, which suits the
+Ender-5 Max's 400 × 400 mm bed for the same reason. Like the K2 Plus PLA pair it
+leaves the support Z gap at the stock 0.2 mm. Wall count is 3 against stock 2.
+
+The stock Ender-5 Max preset differs from the K2 Plus one underneath, and those
+differences still apply: 3000 mm/s² wall acceleration against 5000, a 0.55 mm
+first-layer line against 0.5, 80 mm/s first-layer infill against 105, and
+180 mm/s top surface against 200. The preset was written here rather than
+calibrated, so it hasn't been print-tested yet.
+
+There's no 0.16mm variant, because Creality ships no 0.16mm stock preset for
+the Ender-5 Max. There are no Ender-5 Max printer or filament presets in the
+repo yet.
 
 ## Keeping in sync with Creality Print
 
